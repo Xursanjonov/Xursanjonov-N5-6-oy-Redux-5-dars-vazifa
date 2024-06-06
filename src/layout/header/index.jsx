@@ -1,8 +1,11 @@
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom/dist'
 import { FaSearch } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
 
 const Header = () => {
+    const likeCart = useSelector(state => state.wishlist.value).length
+
     return (
         <header className='w-full sticky top-0 z-50 text-black bg-gray-400'>
             <nav className='py-3 max-w-[1520px] mx-auto flex items-center justify-between'>
@@ -12,7 +15,10 @@ const Header = () => {
                     <FaSearch fontSize={20} />
                 </div>
                 <div className="flex items-center justify-center gap-8 font-bold text-lg">
-                    <Link to={'/wishlist'} >Wishlist</Link>
+                    <Link to={'/wishlist'} >
+                        <span>Wishlist</span>
+                        {likeCart ? <sup>{likeCart}</sup> : <></>}
+                    </Link>
                     <Link to={'/cart'} >Cart</Link>
                 </div>
                 <div className="flex items-center justify-center gap-3">

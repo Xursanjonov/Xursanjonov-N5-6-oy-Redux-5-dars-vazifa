@@ -1,13 +1,24 @@
-import React, { Fragment, memo, useState } from 'react'
+import React, { Fragment, memo, useEffect, useState } from 'react'
 import { useDeleteProductMutation } from '../../context/api/productApi'
-import { FaPenToSquare, FaRegHeart, FaTrashCan } from "react-icons/fa6";
-import { FaShoppingCart } from 'react-icons/fa';
+import { FaHeart, FaPenToSquare, FaRegHeart, FaTrashCan } from "react-icons/fa6";
 import EditProductModal from '../modals/EditProductModal'
+import { useDispatch, useSelector } from 'react-redux';
+import { like } from '../../context/slice/wishlistSlice';
 
 const ProductItem = ({ product, admin }) => {
     const [show, setShow] = useState(false)
     const [edit, setEdit] = useState(null)
     const [deleteProduct, { isLoading: detetedLoading }] = useDeleteProductMutation()
+    const likeCart = useSelector(state => state.wishlist.value)
+    const cartData = useSelector(state => state.cart.value)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        localStorage.setItem('wishlist', JSON.stringify(likeCart))
+    }, [likeCart])
+    useEffect(() => {
+        localStorage.setItem('cart-data', JSON.stringify(cartData))
+    }, [cartData])
 
     const editBtn = (e) => {
         e.preventDefault();
@@ -33,10 +44,15 @@ const ProductItem = ({ product, admin }) => {
                             </div>
                         ) : (
                             <div className="flex items-center justify-start gap-2">
-                                <button disabled={detetedLoading}
-                                    onClick={() => (e.target)}
-                                    className='product-item-info-del'> <FaRegHeart /> </button>
-                                <button className='product-item-info-edit'> <FaShoppingCart /> </button>
+                                <button disabled={detetedLoading} onClick={() => dispatch(like(product))} className='product-item-info-del'>
+                                    {
+                                        likeCart?.some(el => el.id === product.id) ?
+                                            <FaHeart color='red' fontSize={20} /> : <FaRegHeart fontSize={20} />
+                                    }
+                                </button>
+                                <button className='px-2 py-0.5 font-semibold rounded-md text-black bg-green-500'>
+                                    Add
+                                </button>
                             </div>
                         )
                     }

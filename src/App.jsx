@@ -6,7 +6,6 @@ import Home from './pages/home/Home'
 import Login from './pages/auth/login/Login'
 import Wishlist from './pages/wishlist'
 import Cart from './pages/cart'
-import Shop from './pages/shop'
 import Auth from './pages/auth/Auth'
 import Admin from './pages/admin/Admin'
 import Manage from './pages/admin/manage'
@@ -27,7 +26,6 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="cart" element={<Cart />} />
-          <Route path="shop" element={<Shop />} />
         </Route>
 
         <Route path="/" element={<Auth />}>
