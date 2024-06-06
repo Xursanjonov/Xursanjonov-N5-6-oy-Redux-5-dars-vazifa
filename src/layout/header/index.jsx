@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 
 const Header = () => {
     const likeCart = useSelector(state => state.wishlist.value).length
+    const cartData = useSelector(state => state.cart.value).length
 
     return (
         <header className='w-full sticky top-0 z-50 text-black bg-gray-400'>
@@ -17,9 +18,12 @@ const Header = () => {
                 <div className="flex items-center justify-center gap-8 font-bold text-lg">
                     <Link to={'/wishlist'} >
                         <span>Wishlist</span>
-                        {likeCart ? <sup>{likeCart}</sup> : <></>}
+                        {likeCart ? <sup className='ps-1'>{likeCart}</sup> : <></>}
                     </Link>
-                    <Link to={'/cart'} >Cart</Link>
+                    <Link to={'/cart'} >
+                        <span>Carts</span>
+                        {cartData ? <sup className='ps-1'>{cartData}</sup> : <></>}
+                    </Link>
                 </div>
                 <div className="flex items-center justify-center gap-3">
                     <Link to='/' className='w-[100px] btn btn-primary text-lg font-bold'>Login</Link>

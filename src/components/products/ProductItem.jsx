@@ -1,9 +1,10 @@
 import React, { Fragment, memo, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useDeleteProductMutation } from '../../context/api/productApi'
 import { FaHeart, FaPenToSquare, FaRegHeart, FaTrashCan } from "react-icons/fa6";
 import EditProductModal from '../modals/EditProductModal'
-import { useDispatch, useSelector } from 'react-redux';
 import { like } from '../../context/slice/wishlistSlice';
+import { add } from '../../context/slice/cartSlice';
 
 const ProductItem = ({ product, admin }) => {
     const [show, setShow] = useState(false)
@@ -50,7 +51,8 @@ const ProductItem = ({ product, admin }) => {
                                             <FaHeart color='red' fontSize={20} /> : <FaRegHeart fontSize={20} />
                                     }
                                 </button>
-                                <button className='px-2 py-0.5 font-semibold rounded-md text-black bg-green-500'>
+                                <button onClick={() => dispatch(add(product))}
+                                    className='px-2 py-0.5 font-semibold rounded-md text-black bg-green-500'>
                                     Add
                                 </button>
                             </div>

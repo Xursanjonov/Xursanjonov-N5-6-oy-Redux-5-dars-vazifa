@@ -12,6 +12,7 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    // carts add product
     add: (state, { payload }) => {
       let index = state.value.findIndex((el) => el.id === payload.id);
       if (index < 0) {
@@ -19,6 +20,7 @@ const cartSlice = createSlice({
       }
       saveCartData(state.value);
     },
+
     remove: (state, { payload }) => {
       state.value = state.value.filter((el) => el.id !== payload.id);
       saveCartData(state.value);
@@ -27,10 +29,8 @@ const cartSlice = createSlice({
       let index = state.value.findIndex((el) => el.id === payload.id);
       state.value = state.value?.map((el, inx) => {
         if (index === inx) {
-          // aynan siz bosgan product
           return { ...el, amount: el.amount + 1 };
         } else {
-          // qolganlari
           return el;
         }
       });
